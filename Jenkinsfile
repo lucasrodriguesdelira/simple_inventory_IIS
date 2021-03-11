@@ -1,5 +1,5 @@
 pipeline{
-    agent {label 'windows'}
+    agent {label 'Windows'}
 
 	 parameters {
 		text(name: 'SERVIDOR', defaultValue: '', description: 'Informe os Servidores para extração')
