@@ -1,4 +1,3 @@
-$env:SERVIDOR > "ListServers.txt"
 $servers = Get-Content "ListServers.txt"
 
 ## Criação do HTML header ##
@@ -6,7 +5,8 @@ $servers = Get-Content "ListServers.txt"
 <HTML>
 <div align=""center"">
 <body>
-<font color =""black"" face=""Microsoft Tai le""><H2> INVENTARIO MIDDLEWARE </H2>" > index.html
+<font color =""black"" face=""Microsoft Tai le"">
+<H2> INVENTARIO MIDDLEWARE </H2>" > index.html
 
 ## Criação dos titulos das colunas em HTML ##
 "<Table border=1 cellpadding=0 cellspacing=0>
@@ -21,7 +21,9 @@ $servers = Get-Content "ListServers.txt"
 <TD><FONT COLOR=""white""><B>&nbsp; VDIR &nbsp</B></TD>
 </TR>" >> index.html
 
+## Inicio do loop para lista de servidores ##
 foreach($server in $servers){
+    ## Variaveis de coleta da versão do IIS do SO e o IP ##
     $vIIS = Invoke-Command -ComputerName $server -scriptblock {(get-itemproperty HKLM:\SOFTWARE\Microsoft\InetStp\ | Select-Object setupstring | Format-Wide | Out-String).Trim()}
     $SO = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $server | ForEach-Object -MemberName Caption
     $ip = (Test-Connection -ComputerName $server -Count 1 | Select-Object IPV4Address | Format-Wide | Out-String).Trim()
